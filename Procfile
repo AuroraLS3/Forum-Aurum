@@ -1,1 +1,1 @@
-web: gunicorn ./com/djrapitops/aurum/hello:app
+web: gunicorn com/djrapitops/aurum/hello:app
