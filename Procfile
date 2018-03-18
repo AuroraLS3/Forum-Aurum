@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath com hello:app
+web: gunicorn --pythonpath com/djrapitops/aurum hello:app
