@@ -1,7 +1,5 @@
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
+from flask import render_template
+from application import app
 
 class Item:
     def __init__(self, name):
