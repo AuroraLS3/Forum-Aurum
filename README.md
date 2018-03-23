@@ -4,20 +4,9 @@ This is a project for 'Tietokantasovellus' course.
 
 ## Goals:
 
-Create a functional forum web application
+Create a functional forum web application with areas, threads and messages as well as user management.
 
-## Functionality
+## Documentation
 
-- Users
-  - Login/Logout
-  - Registration
-  - User Groups (Many to many)
-    - Guest
-    - Approved
-    - Moderator
-    - Admin
-- Areas
-  - Only displayed to specific groups
-- Threads (CRUD)
-  - (Voting)
-  - Comments (CRUD)
+- [User Stories](documentation/UserStories.md)
+- [Database Schema](documentation/drawio/img/schema_v1.jpg)
