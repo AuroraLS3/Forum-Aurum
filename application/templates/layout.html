@@ -6,10 +6,17 @@
 </head>
 
 <body>
+<ul>
+    <li><a href="{{ url_for('register_page') }}">Register a user</a></li>
+    <li><a href="{{ url_for('users') }}">List registered users</a></li>
+    <li><a href="{{ url_for('add_msg_page') }}">Add a message</a></li>
+    <li><a href="{{ url_for('messages') }}">List messages</a></li>
+</ul>
+
 {% block body %}
-<p>
-    Tähän tuodaan sisältö muualta.
-</p>
+    <p>
+        Tähän tuodaan sisältö muualta.
+    </p>
 {% endblock %}
 </body>
 </html>

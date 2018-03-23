@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <form method="POST" action="{{ action }}">
+        Message: <input type="text" name="message"/><br>
+
+        <input type="submit" value="Send message"/>
+    </form>
+{% endblock %}
