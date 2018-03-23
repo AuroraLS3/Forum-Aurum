@@ -20,11 +20,11 @@
 
 - I can do everything a User can
 - I can remove threads and messages of other users
-- I can promote Guests to User group
-- I can create new areas and select group that can see them
+- I can promote Guests to User role
+- I can create new areas and select role that can see them
 
 ### As an Admin
 
 - I can do everything a Moderator can
-- I can change groups of any account
+- I can change roles of any account
 - I can remove any account
