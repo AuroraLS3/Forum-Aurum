@@ -1,6 +1,7 @@
 # coding=utf-8
 import bcrypt
 from flask import redirect, render_template, request, url_for
+from flask_login import login_user, logout_user, login_required
 
 from application import app, db
 from application.forms.loginform import LoginForm
@@ -17,6 +18,7 @@ def hello():
 
 
 @app.route("/users/")
+@login_required
 def users():
     users = User.query.all()
     for user in users:
@@ -26,6 +28,7 @@ def users():
 
 
 @app.route("/messages/")
+@login_required
 def messages():
     messages = Message.query.all()
     for message in messages:
@@ -35,6 +38,7 @@ def messages():
 
 
 @app.route("/messages/", methods=["POST"])
+@login_required
 def add_msg():
     form = MessageForm(request.form)
 
@@ -46,6 +50,7 @@ def add_msg():
 
 
 @app.route("/messages/<msg_id>/")
+@login_required
 def edit_msg_page(msg_id):
     old_content = decode64(Message.query.get(msg_id).content)
     form = MessageForm()
@@ -54,6 +59,7 @@ def edit_msg_page(msg_id):
 
 
 @app.route("/messages/<msg_id>/", methods=["POST"])
+@login_required
 def edit_msg(msg_id):
     message = Message.query.get(msg_id)
     form = MessageForm(request.form)
@@ -65,6 +71,7 @@ def edit_msg(msg_id):
 
 
 @app.route("/messages/new/")
+@login_required
 def add_msg_page():
     return render_template("newmessage.html", action=url_for('add_msg'), form=MessageForm())
 
@@ -98,6 +105,12 @@ def login_page():
     return render_template("auth/login.html", form=LoginForm())
 
 
+@app.route("/auth/logout/")
+def logout():
+    logout_user()
+    return redirect(url_for("hello"))
+
+
 @app.route("/auth/login/", methods=["POST"])
 def login():
     form = LoginForm(request.form)
@@ -118,4 +131,5 @@ def login():
     if not correctPass:
         return render_template("auth/login.html", form=form, error="Incorrect Password")
 
-    return "Success"
+    login_user(user)
+    return redirect(url_for("hello"))
