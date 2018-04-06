@@ -61,6 +61,15 @@ def edit_msg_page(msg_id):
     return render_template("newmessage.html", action=url_for('edit_msg', msg_id=msg_id), form=form)
 
 
+@app.route("/messages/<msg_id>/delete")
+@login_required
+def delete_msg(msg_id):
+    Message.query.filter_by(id=msg_id).delete()
+    db.session().commit()
+
+    return redirect(url_for("messages"))
+
+
 @app.route("/messages/<msg_id>/", methods=["POST"])
 @login_required
 def edit_msg(msg_id):

@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
+    {% if form.content.data %}
+        <h3>Preview</h3>
+        <p>{{ form.content.data }}</p>
+    {% endif %}
+
     <form method="POST" action="{{ action }}">
         <table>
             <tr>
