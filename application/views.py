@@ -1,7 +1,7 @@
 # coding=utf-8
 import bcrypt
 from flask import redirect, render_template, request, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 
 from application import app, db
 from application.forms.loginform import LoginForm
@@ -44,6 +44,9 @@ def add_msg():
 
     content = encode64(form.content.data)
     newMsg = Message(content)
+
+    newMsg.account_id = current_user.id
+
     db.session().add(newMsg)
     db.session().commit()
     return redirect(url_for("messages"))
