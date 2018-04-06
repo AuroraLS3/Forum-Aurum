@@ -3,6 +3,7 @@ import bcrypt
 from flask import redirect, render_template, request, url_for
 
 from application import app, db
+from application.forms.registerform import RegisterForm
 from application.models.message import Message
 from application.models.user import User
 from application.utils.base64util import encode64, decode64
@@ -43,7 +44,8 @@ def add_msg():
 
 @app.route("/messages/<msg_id>/")
 def edit_msg_page(msg_id):
-    return render_template("newmessage.html", action=url_for('edit_msg', msg_id=msg_id))
+    old_content = decode64(Message.query.get(msg_id).content)
+    return render_template("newmessage.html", action=url_for('edit_msg', msg_id=msg_id), value=old_content)
 
 
 @app.route("/messages/<msg_id>/", methods=["POST"])
@@ -57,26 +59,28 @@ def edit_msg(msg_id):
 
 @app.route("/messages/new/")
 def add_msg_page():
-    return render_template("newmessage.html", action=url_for('add_msg'))
+    return render_template("newmessage.html", action=url_for('add_msg'), value="")
 
 
 @app.route("/register/")
 def register_page():
-    return render_template("register.html")
+    return render_template("register.html", form=RegisterForm())
 
 
 @app.route("/register/", methods=["POST"])
 def register():
-    username = request.form.get("username")
-    password = request.form.get("password").encode()
-    passwordAgain = request.form.get("passwordAgain").encode()
+    form = RegisterForm(request.form)
+
+    if not form.validate():
+        return render_template("register.html", form=form)
+
+    username = form.username.data
+    password = form.password.data.encode()
+
     hashpw = bcrypt.hashpw(password, bcrypt.gensalt())
-    if (bcrypt.checkpw(passwordAgain, hashpw)):
-        registeringUser = User(username, hashpw)
+    registeringUser = User(username, hashpw)
 
-        db.session().add(registeringUser)
-        db.session().commit()
+    db.session().add(registeringUser)
+    db.session().commit()
 
-        return "Created new user '{0}!'".format(username)
-    else:
-        return "Passwords didn't match"
+    return "Created new user '{0}!'".format(username)

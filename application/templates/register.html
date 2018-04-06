@@ -2,10 +2,50 @@
 
 {% block body %}
     <form method="POST" action="{{ url_for('register') }}">
-        Username: <input type="text" name="username"/><br>
-        Password: <input type="password" name="password"/><br>
-        Password Again: <input type="password" name="passwordAgain"/><br>
-
-        <input type="submit" value="Register user"/>
+        <table>
+            <tr>
+                <td>
+                    {{ form.username.label }}
+                </td>
+                <td>
+                    {{ form.username }}
+                </td>
+                <td>
+                    <ul>
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.password.label }}
+                </td>
+                <td>
+                    {{ form.password }}
+                </td>
+                <td>
+                    <ul>
+                        {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{ form.password_again.label }}
+                </td>
+                <td>
+                    {{ form.password_again }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Register new user"/>
+                </td>
+            </tr>
+        </table>
     </form>
 {% endblock %}
