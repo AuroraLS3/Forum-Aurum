@@ -1,5 +1,6 @@
 # coding=utf-8
-from os import urandom, os
+import os
+from os import urandom
 
 from flask import Flask
 

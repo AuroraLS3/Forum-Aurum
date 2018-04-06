@@ -2,6 +2,7 @@
 
 {% block body %}
     <h1>Register</h1>
+    <p>{{ error }}</p>
     <form method="POST" action="{{ url_for('register') }}">
         <table>
             <tr>

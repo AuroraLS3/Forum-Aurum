@@ -92,6 +92,11 @@ def register():
         return render_template("auth/register.html", form=form)
 
     username = form.username.data
+
+    user = User.query.filter_by(username=username).first()
+    if (user is not None):
+        return render_template("auth/register.html", form=form, error="User Already Exists!")
+
     password = form.password.data.encode()
 
     hashpw = bcrypt.hashpw(password, bcrypt.gensalt())
@@ -100,7 +105,9 @@ def register():
     db.session().add(registeringUser)
     db.session().commit()
 
-    return "Created new user '{0}!'".format(username)
+    user = User.query.filter_by(username=username).first()
+    login_user(user)
+    return redirect(url_for("hello"))
 
 
 @app.route("/auth/login/")
