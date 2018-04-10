@@ -9,7 +9,7 @@ class User(db.Model):
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
     password = db.Column(db.String(75))
 
-    messages = db.relationship("Message", backref='account', lazy=True)
+    messages = db.relationship("Message", back_populates='account', lazy=True)
 
     def __init__(self, username, hashedPassword):
         self.username = username

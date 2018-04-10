@@ -18,6 +18,10 @@ db = SQLAlchemy(app)
 
 from application import views
 from application.models.user import User
+from application.models.message import Message
+from application.models.thread import Thread
+from application.models.area import Area
+from application.models.role import Role
 
 app.config["SECRET_KEY"] = urandom(32)
 
