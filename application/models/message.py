@@ -14,5 +14,6 @@ class Message(db.Model):
     thread_id = db.Column(db.Integer, db.ForeignKey('thread.id'), nullable=False)
     thread = db.relationship("Thread", back_populates="messages", lazy=True)
 
-    def __init__(self, content):
+    def __init__(self, content, thread_id):
         self.content = content
+        self.thread_id = thread_id

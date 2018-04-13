@@ -25,9 +25,9 @@ def forum_main():
 @login_required
 def create_area_page():
     form = AreaForm()
-    form.roles.choices = [(g.id, g.name) for g in Role.query.order_by('name')]
+    form.role.choices = [(role.id, role.name) for role in Role.query.order_by('id')]
 
-    return render_template("forum/createarea.html", action=url_for('forum.create_area'), form=AreaForm())
+    return render_template("forum/area_new.html", action=url_for('forum.create_area'), form=form)
 
 
 @bp.route("/area/new", methods=["POST"])
@@ -36,12 +36,12 @@ def create_area():
     form = AreaForm(request.form)
 
     if not form.validate():
-        return render_template("forum/createarea.html", form=form)
+        return render_template("forum/area_new.html", form=form)
 
     name = form.name.data
     description = encode64(form.description.data)
 
-    newArea = Area(name, description, form.roles.data)
+    newArea = Area(name, description, form.role.data.id)
 
     db.session().add(newArea)
     db.session().commit()

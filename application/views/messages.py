@@ -24,7 +24,7 @@ def messages():
 def add_msg():
     form = MessageForm(request.form)
 
-    content = encode64(form.content.data)
+    content = encode64(form.message.data)
     newMsg = Message(content)
 
     newMsg.account_id = current_user.id
@@ -39,8 +39,8 @@ def add_msg():
 def edit_msg_page(msg_id):
     old_content = decode64(Message.query.get(msg_id).content)
     form = MessageForm()
-    form.content.data = old_content
-    return render_template("forum/newmessage.html", action=url_for('messages.edit_msg', msg_id=msg_id), form=form)
+    form.message.data = old_content
+    return render_template("forum/message_new.html", action=url_for('messages.edit_msg', msg_id=msg_id), form=form)
 
 
 @bp.route("/messages/<msg_id>/delete")
@@ -58,7 +58,7 @@ def edit_msg(msg_id):
     message = Message.query.get(msg_id)
     form = MessageForm(request.form)
 
-    message.content = encode64(form.content.data)
+    message.content = encode64(form.message.data)
     db.session().commit()
 
     return redirect(url_for("messages.messages"))
@@ -67,4 +67,4 @@ def edit_msg(msg_id):
 @bp.route("/messages/new/")
 @login_required
 def add_msg_page():
-    return render_template("forum/newmessage.html", action=url_for('messages.add_msg'), form=MessageForm())
+    return render_template("forum/message_new.html", action=url_for('messages.add_msg'), form=MessageForm())

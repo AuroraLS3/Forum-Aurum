@@ -8,6 +8,9 @@ class Thread(db.Model):
     name = db.Column(db.String(100))
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    account = db.relationship("User", back_populates="threads", lazy=True)
+
     area_id = db.Column(db.Integer, db.ForeignKey('area.id'), nullable=False)
     area = db.relationship("Area", back_populates="threads", lazy=True)
 

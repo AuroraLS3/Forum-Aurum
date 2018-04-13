@@ -2,12 +2,22 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
-    <h1>Register</h1>
-    <p>{{ error }}</p>
-    <form method="POST" action="{{ url_for('auth.register') }}">
-        {{ wtf.form_field(form.username, class='form-control', placeholder='Username') }}
-        {{ wtf.form_field(form.password, class='form-control') }}
-        {{ wtf.form_field(form.password_again, class='form-control') }}
-        <input class="btn btn-info" type="submit" value="Register new user"/>
-    </form>
+    <div class="card">
+        <div class="card-header">
+            <h3><i class="fa fa-user-plus"></i> Register</h3>
+        </div>
+        <div class="card-body">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <form method="POST" action="{{ url_for('auth.register') }}">
+                {{ wtf.form_field(form.username, class='form-control', placeholder='Username') }}
+                {{ wtf.form_field(form.password, class='form-control') }}
+                {{ wtf.form_field(form.password_again, class='form-control') }}
+                <input class="btn btn-info" type="submit" value="Register new user"/>
+            </form>
+        </div>
+    </div>
 {% endblock %}

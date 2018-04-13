@@ -4,7 +4,7 @@
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3><i class="fa fa-user"></i> Login</h3>
+            <h3><i class="fa fa-comment-alt"></i> Start a new Topic</h3>
         </div>
         <div class="card-body">
             {% if error %}
@@ -12,10 +12,10 @@
                     {{ error }}
                 </div>
             {% endif %}
-            <form method="POST" action="{{ url_for('auth.login') }}">
-                {{ wtf.form_field(form.username, class='form-control', placeholder='Username') }}
-                {{ wtf.form_field(form.password, class='form-control') }}
-                <input class="btn btn-info" type="submit" value="Login"/>
+            <form method="POST" action="{{ action }}">
+                {{ wtf.form_field(form.name, class='form-control', placeholder='Title') }}
+                {{ wtf.form_field(form.message, class='form-control', placeholder='Write here..') }}
+                <input class="btn btn-info" type="submit" value="Post">
             </form>
         </div>
     </div>
