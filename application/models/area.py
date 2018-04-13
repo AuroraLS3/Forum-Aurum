@@ -12,6 +12,7 @@ class Area(db.Model):
 
     threads = db.relationship("Thread", back_populates='area', lazy=True)
 
-    def __init__(self, name, role_id):
+    def __init__(self, name, description, role_id):
         self.name = name
+        self.description = description
         self.role_id = role_id

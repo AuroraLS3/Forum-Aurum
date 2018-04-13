@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ area.name }}</h3>
+            <button type="button" class="btn btn-info float-right"><i class="fa fa-comment-alt"></i> New Thread</button>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% if threads %}
+                    {% for thread in threads %}
+
+                        <li class="list-group-item">{{ thread.name }}</li>
+
+                    {% endfor %}
+                {% else %}
+                    <p><i class="fa fa-comment-alt"></i> Begin a discussion! :)</p>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
