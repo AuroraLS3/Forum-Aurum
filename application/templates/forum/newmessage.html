@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block body %}
+    {% if form.content.data %}
+        <h3>Preview</h3>
+        <p>{{ form.content.data }}</p>
+    {% endif %}
+
+    <form method="POST" action="{{ action }}">
+        {{ wtf.form_field(form.content, class='form-control', placeholder='Write here..') }}
+        <input class="btn btn-info" type="submit" value="Send Message">
+    </form>
+{% endblock %}

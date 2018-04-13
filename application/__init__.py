@@ -3,8 +3,10 @@ import os
 from os import urandom
 
 from flask import Flask
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
+Bootstrap(app)
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -16,7 +18,13 @@ else:
 
 db = SQLAlchemy(app)
 
-from application import views
+from application.views import forum, users, messages, auth
+
+app.register_blueprint(auth.bp)
+app.register_blueprint(forum.bp)
+app.register_blueprint(users.bp)
+app.register_blueprint(messages.bp)
+
 from application.models.user import User
 from application.models.message import Message
 from application.models.thread import Thread
@@ -30,7 +38,7 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-login_manager.login_view = "login_page"
+login_manager.login_view = "auth.login_page"
 login_manager.login_message = "Please login to use this functionality."
 
 

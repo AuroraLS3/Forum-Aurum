@@ -11,15 +11,15 @@
 <body>
 {% if current_user.is_authenticated %}
     <p>
-        Logged in as <b>{{ current_user.username }}</b> <a href="{{ url_for('logout') }}">Logout</a>
+        Logged in as <b>{{ current_user.username }}</b> <a href="{{ url_for('auth.logout') }}">Logout</a>
     </p>
 {% else %}
-    <a href="{{ url_for('login_page') }}">Login</a> <a href="{{ url_for('register_page') }}">Register</a>
+    <a href="{{ url_for('auth.login_page') }}">Login</a> <a href="{{ url_for('auth.register_page') }}">Register</a>
 {% endif %}
 <ul>
-    <li><a href="{{ url_for('users') }}">List registered users</a></li>
-    <li><a href="{{ url_for('add_msg_page') }}">Add a message</a></li>
-    <li><a href="{{ url_for('messages') }}">List messages</a></li>
+    <li><a href="{{ url_for('users.users') }}">List registered users</a></li>
+    <li><a href="{{ url_for('messages.add_msg_page') }}">Add a message</a></li>
+    <li><a href="{{ url_for('messages.messages') }}">List messages</a></li>
 </ul>
 
 <main role="main" class="container">
@@ -27,6 +27,11 @@
         <p>Content</p>
     {% endblock %}
 </main>
+
+<footer class="container">
+    <p class="float-right">Powered by <a target="_blank" href="https://github.com/Rsl1122/Forum-Aurum">Forum Aurum</a>
+    </p>
+</footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -37,5 +42,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+<script src="https://use.fontawesome.com/df48eb908b.js"></script>
 </body>
 </html>
