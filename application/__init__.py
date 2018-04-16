@@ -50,3 +50,11 @@ def load_user(user_id):
 
 
 db.create_all()
+
+if not Role.query.filter_by(name='anyone').first():
+    db.session.add(Role('anyone'))
+    db.session.add(Role('guest'))
+    db.session.add(Role('member'))
+    db.session.add(Role('moderator'))
+    db.session.add(Role('admin'))
+    db.session.commit()
