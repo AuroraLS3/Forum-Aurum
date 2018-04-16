@@ -15,7 +15,7 @@
                 {% if g.area.topics %}
                     {% for topic in g.area.topics %}
                         <li class="list-group-item" onclick="
-                                location.href = '{{ url_for('topic.topic', area_name=g.area.name, topic_name=topic.name) }}'
+                                location.href = '{{ url_for('topic.topic', area_name=g.area.name, created=topic.created) }}'
                                 ">
                             {{ topic.name }}
                         </li>

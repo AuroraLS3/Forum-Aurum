@@ -18,14 +18,13 @@ else:
 
 db = SQLAlchemy(app)
 
-from application.views import forum, users, messages, auth, areas, topics
+from application.views import forum, users, auth, areas, topics
 
 app.register_blueprint(auth.bp)
 app.register_blueprint(forum.bp)
 app.register_blueprint(users.bp)
 app.register_blueprint(areas.bp)
 app.register_blueprint(topics.bp)
-app.register_blueprint(messages.bp)
 
 from application.models.user import User
 from application.models.message import Message

@@ -9,6 +9,27 @@
             integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+"
             crossorigin="anonymous"></script>
     <title>Forum Aurum</title>
+    <style>
+        .wrapper {
+            font-family: 'arial', sans-serif;
+        }
+
+        input.icon {
+            padding: 5px;
+        }
+
+        input.icon::-webkit-input-placeholder {
+            font-family: 'FontAwesome';
+        }
+
+        input.icon::-moz-placeholder {
+            font-family: 'FontAwesome';
+        }
+
+        input.icon::-ms-input-placeholder {
+            font-family: 'FontAwesome';
+        }
+    </style>
 </head>
 
 <body>
@@ -21,8 +42,6 @@
 {% endif %}
 <ul>
     <li><a href="{{ url_for('users.users') }}">List registered users</a></li>
-    <li><a href="{{ url_for('messages.add_msg_page') }}">Add a message</a></li>
-    <li><a href="{{ url_for('messages.messages') }}">List messages</a></li>
 </ul>
 
 <main role="main" class="container">

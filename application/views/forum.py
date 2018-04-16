@@ -14,13 +14,13 @@ def hello():
     return redirect(url_for("forum.forum_main"))
 
 
-@bp.route("/forum")
+@bp.route("/forum/")
 def forum_main():
     areas = Area.query.all()
     return render_template("forum.html", areas=areas)
 
 
-@bp.route("/area/new")
+@bp.route("/area/new/")
 @login_required
 def create_area_page():
     form = AreaForm()
@@ -29,7 +29,7 @@ def create_area_page():
     return render_template("forum/area_new.html", action=url_for('forum.create_area'), form=form)
 
 
-@bp.route("/area/new", methods=["POST"])
+@bp.route("/area/new/", methods=["POST"])
 @login_required
 def create_area():
     form = AreaForm(request.form)

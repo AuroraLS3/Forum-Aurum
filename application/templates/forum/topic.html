@@ -1,22 +1,48 @@
 {% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
 
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.topic.name }}</h3>
-            <button type="button" class="btn btn-info float-right"><i class="fa fa-comment"></i> Comment</button>
         </div>
-        {% if g.topic.messages %}
-            {% for message in g.topic.messages %}
-                <div class="card-body">
-                    <p>{{ message.content }}</p>
+        <ul class="list-group">
+            {% if g.topic.messages %}
+                {% for message in g.topic.messages %}
+                    <div class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h5>{{ message.account.username }}</h5>
+                                <p>{{ message.created }}</p>
+                            </div>
+                            <div class="col-md-9">
+                                <p>{{ message.content }}</p>
+                            </div>
+                            <div class="col-md-1">
+                                <a href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">edit</a>
+                                <a href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item"><p><i class="fa fa-comment-alt"></i> No messages here, begin a discussion!
+                    :)</p>
+                </li>
+            {% endif %}
+        </ul>
+        <div class="card-footer">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
                 </div>
-            {% endfor %}
-        {% else %}
-            <div class="card-body"><p><i class="fa fa-comment-alt"></i> No messages here, begin a discussion! :)</p>
-            </div>
-        {% endif %}
+            {% endif %}
+            <form method="POST" action="{{ url_for('topic.add_msg', area_name=g.area.name, created=g.topic.created) }}">
+                {{ wtf.form_field(form.message, class='form-control', placeholder='Write here..') }}
+                <input class="btn btn-info" type="submit" value="Comment">
+            </form>
+        </div>
     </div>
 
 {% endblock %}

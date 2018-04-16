@@ -25,13 +25,13 @@ def area():
     return render_template("forum/area.html")
 
 
-@bp.route("/topic/new")
+@bp.route("/topic/new/")
 @login_required
 def create_topic_page():
     return render_template("forum/topic_new.html", form=TopicForm())
 
 
-@bp.route("/topic/new", methods=['POST'])
+@bp.route("/topic/new/", methods=['POST'])
 def create_topic():
     form = TopicForm(request.form)
 
