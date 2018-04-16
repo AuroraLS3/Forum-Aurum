@@ -4,7 +4,6 @@ from flask_login import login_required, current_user
 from application import db
 from application.forms.messageform import MessageForm
 from application.models.message import Message
-from application.utils.base64util import decode64, encode64
 
 bp = Blueprint('messages', __name__, template_folder='templates')
 
@@ -14,7 +13,7 @@ bp = Blueprint('messages', __name__, template_folder='templates')
 def messages():
     messages = Message.query.all()
     for message in messages:
-        message.content = decode64(message.content)
+        message.content = message.content
 
     return render_template("forum/messages.html", messages=messages, msgMethod='POST')
 
@@ -24,7 +23,7 @@ def messages():
 def add_msg():
     form = MessageForm(request.form)
 
-    content = encode64(form.message.data)
+    content = form.message.data
     newMsg = Message(content)
 
     newMsg.account_id = current_user.id
@@ -37,7 +36,7 @@ def add_msg():
 @bp.route("/messages/<msg_id>/")
 @login_required
 def edit_msg_page(msg_id):
-    old_content = decode64(Message.query.get(msg_id).content)
+    old_content = Message.query.get(msg_id).content
     form = MessageForm()
     form.message.data = old_content
     return render_template("forum/message_new.html", action=url_for('messages.edit_msg', msg_id=msg_id), form=form)
@@ -58,7 +57,7 @@ def edit_msg(msg_id):
     message = Message.query.get(msg_id)
     form = MessageForm(request.form)
 
-    message.content = encode64(form.message.data)
+    message.content = form.message.data
     db.session().commit()
 
     return redirect(url_for("messages.messages"))

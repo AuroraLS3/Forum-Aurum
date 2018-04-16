@@ -5,15 +5,20 @@
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.area.name }}</h3>
-            <button type="button" class="btn btn-info float-right"><i class="fa fa-comment-alt"></i> New Thread</button>
+            <a href="{{ url_for('area.create_thread_page', area_name=g.area.name) }}"
+               class="btn btn-info float-right"><i
+                    class="fa fa-comment-alt"></i> New Topic
+            </a>
         </div>
         <div class="card-body">
             <ul class="list-group">
                 {% if g.area.threads %}
                     {% for thread in g.area.threads %}
-
-                        <li class="list-group-item">{{ thread.name }}</li>
-
+                        <li class="list-group-item" onclick="
+                                location.href = '{{ url_for('thread.thread', area_name=g.area.name, thread_name=thread.name) }}'
+                                ">
+                            {{ thread.name }}
+                        </li>
                     {% endfor %}
                 {% else %}
                     <p><i class="fa fa-comment-alt"></i> Begin a discussion! :)</p>

@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.thread.name }}</h3>
-            <button type="button" class="btn btn-info float-right"><i class="fa fa-comment-alt"></i> New Thread</button>
+            <button type="button" class="btn btn-info float-right"><i class="fa fa-comment"></i> Comment</button>
         </div>
         {% if g.thread.messages %}
             {% for message in g.thread.messages %}
@@ -14,7 +14,8 @@
                 </div>
             {% endfor %}
         {% else %}
-            <div class="card-body"><p><i class="fa fa-comment-alt"></i> Begin a discussion! :)</p></div>
+            <div class="card-body"><p><i class="fa fa-comment-alt"></i> No messages here, begin a discussion! :)</p>
+            </div>
         {% endif %}
     </div>
 

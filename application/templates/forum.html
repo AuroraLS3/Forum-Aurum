@@ -13,7 +13,11 @@
                 {% if areas %}
                     {% for area in areas %}
 
-                        <li class="list-group-item">{{ area.name }}</li>
+                        <li class="list-group-item" onclick=
+                                "location.href = '{{ url_for('area.area', area_name=area.name) }}'
+                                        ">
+                            {{ area.name }}
+                        </li>
 
                     {% endfor %}
                 {% else %}

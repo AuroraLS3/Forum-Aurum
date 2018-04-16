@@ -5,7 +5,6 @@ from application import db
 from application.forms.areaform import AreaForm
 from application.models.area import Area
 from application.models.role import Role
-from application.utils.base64util import encode64
 
 bp = Blueprint('forum', __name__, template_folder='templates')
 
@@ -39,7 +38,7 @@ def create_area():
         return render_template("forum/area_new.html", form=form)
 
     name = form.name.data
-    description = encode64(form.description.data)
+    description = form.description.data
 
     newArea = Area(name, description, form.role.data.id)
 
