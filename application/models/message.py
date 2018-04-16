@@ -11,9 +11,9 @@ class Message(db.Model):
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     account = db.relationship("User", back_populates="messages", lazy=True)
 
-    thread_id = db.Column(db.Integer, db.ForeignKey('thread.id'), nullable=False)
-    thread = db.relationship("Thread", back_populates="messages", lazy=True)
+    topic_id = db.Column(db.Integer, db.ForeignKey('topic.id'), nullable=False)
+    topic = db.relationship("Topic", back_populates="messages", lazy=True)
 
-    def __init__(self, content, thread_id):
+    def __init__(self, content, topic_id):
         self.content = content
-        self.thread_id = thread_id
+        self.topic_id = topic_id

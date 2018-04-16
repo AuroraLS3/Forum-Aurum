@@ -4,11 +4,11 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.thread.name }}</h3>
+            <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.topic.name }}</h3>
             <button type="button" class="btn btn-info float-right"><i class="fa fa-comment"></i> Comment</button>
         </div>
-        {% if g.thread.messages %}
-            {% for message in g.thread.messages %}
+        {% if g.topic.messages %}
+            {% for message in g.topic.messages %}
                 <div class="card-body">
                     <p>{{ message.content }}</p>
                 </div>

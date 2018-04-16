@@ -2,10 +2,10 @@ from flask import Blueprint, g, render_template, request, url_for, redirect
 from flask_login import login_required, current_user
 
 from application import db
-from application.forms.threadform import ThreadForm
+from application.forms.topicform import TopicForm
 from application.models.area import Area
 from application.models.message import Message
-from application.models.thread import Thread
+from application.models.topic import Topic
 
 bp = Blueprint('area', __name__, template_folder='templates', url_prefix='/forum/<area_name>')
 
@@ -25,33 +25,33 @@ def area():
     return render_template("forum/area.html")
 
 
-@bp.route("/thread/new")
+@bp.route("/topic/new")
 @login_required
-def create_thread_page():
-    return render_template("forum/thread_new.html", form=ThreadForm())
+def create_topic_page():
+    return render_template("forum/topic_new.html", form=TopicForm())
 
 
-@bp.route("/thread/new", methods=['POST'])
-def create_thread():
-    form = ThreadForm(request.form)
+@bp.route("/topic/new", methods=['POST'])
+def create_topic():
+    form = TopicForm(request.form)
 
     if not form.validate():
-        return render_template("forum/thread_new.html", form=form)
+        return render_template("forum/topic_new.html", form=form)
 
     name = form.name.data
 
-    newThread = Thread(name, g.area.id)
-    newThread.account_id = current_user.id
+    newTopic = Topic(name, g.area.id)
+    newTopic.account_id = current_user.id
 
-    db.session().add(newThread)
+    db.session().add(newTopic)
     db.session().commit()
 
     message = form.message.data
 
-    newMsg = Message(message, newThread.id)
+    newMsg = Message(message, newTopic.id)
     newMsg.account_id = current_user.id
 
     db.session().add(newMsg)
     db.session().commit()
 
-    return redirect(url_for("thread.thread", area_name=g.area.name, thread_name=name))
+    return redirect(url_for("topic.topic", area_name=g.area.name, topic_name=name))

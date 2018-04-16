@@ -10,7 +10,7 @@ class Area(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
     required_role = db.relationship("Role", back_populates='areas', lazy=True)
 
-    threads = db.relationship("Thread", back_populates='area', lazy=True)
+    topics = db.relationship("Topic", back_populates='area', lazy=True)
 
     def __init__(self, name, description, role_id):
         self.name = name

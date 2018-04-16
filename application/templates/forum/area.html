@@ -5,19 +5,19 @@
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.area.name }}</h3>
-            <a href="{{ url_for('area.create_thread_page', area_name=g.area.name) }}"
+            <a href="{{ url_for('area.create_topic_page', area_name=g.area.name) }}"
                class="btn btn-info float-right"><i
                     class="fa fa-comment-alt"></i> New Topic
             </a>
         </div>
         <div class="card-body">
             <ul class="list-group">
-                {% if g.area.threads %}
-                    {% for thread in g.area.threads %}
+                {% if g.area.topics %}
+                    {% for topic in g.area.topics %}
                         <li class="list-group-item" onclick="
-                                location.href = '{{ url_for('thread.thread', area_name=g.area.name, thread_name=thread.name) }}'
+                                location.href = '{{ url_for('topic.topic', area_name=g.area.name, topic_name=topic.name) }}'
                                 ">
-                            {{ thread.name }}
+                            {{ topic.name }}
                         </li>
                     {% endfor %}
                 {% else %}
