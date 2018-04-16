@@ -62,4 +62,4 @@ def create_topic():
     db.session().add(newMsg)
     db.session().commit()
 
-    return redirect(url_for("topic.topic", area_name=g.area.name, topic_name=name))
+    return redirect(url_for("topic.topic", area_name=g.area.name, created=newTopic.created))
