@@ -6,6 +6,7 @@ from application.forms.topicform import TopicForm
 from application.models.area import Area
 from application.models.message import Message
 from application.models.topic import Topic
+from application.utils.breadcrumb import Crumb
 
 bp = Blueprint('area', __name__, template_folder='templates', url_prefix='/forum/<area_name>')
 
@@ -13,12 +14,15 @@ bp = Blueprint('area', __name__, template_folder='templates', url_prefix='/forum
 @bp.url_value_preprocessor
 def fetch_area(endpoint, values):
     g.area = Area.query.filter_by(name=values.pop('area_name')).first()
+    g.breadcrumbs = [
+        Crumb('Home', url_for('forum.forum_main')),
+        Crumb(g.area.name)
+    ]
 
 
 @bp.route("/")
 @login_required
 def area():
-    print(g.area, g.area.name)
     if not g.area:
         return redirect(url_for("forum.forum_main"))
 
@@ -28,6 +32,10 @@ def area():
 @bp.route("/topic/new/")
 @login_required
 def create_topic_page():
+    g.breadcrumbs = [
+        Crumb('Home', url_for('forum.forum_main')),
+        Crumb(g.area.name, url_for('area.area', area_name=g.area.name))
+    ]
     return render_template("forum/topic_new.html", form=TopicForm())
 
 

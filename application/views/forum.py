@@ -1,12 +1,18 @@
-from flask import Blueprint, redirect, url_for, render_template, request
+from flask import Blueprint, redirect, url_for, render_template, request, g
 from flask_login import login_required
 
 from application import db
 from application.forms.areaform import AreaForm
 from application.models.area import Area
 from application.models.role import Role
+from application.utils.breadcrumb import Crumb
 
 bp = Blueprint('forum', __name__, template_folder='templates')
+
+
+@bp.url_value_preprocessor
+def breadcrumb(endpoint, values):
+    g.breadcrumbs = [Crumb('Home')]
 
 
 @bp.route("/")
@@ -23,6 +29,7 @@ def forum_main():
 @bp.route("/area/new/")
 @login_required
 def create_area_page():
+    g.breadcrumbs = [Crumb('Home', url_for("forum.forum_main"))]
     form = AreaForm()
     form.role.choices = [(role.id, role.name) for role in Role.query.order_by('id')]
 

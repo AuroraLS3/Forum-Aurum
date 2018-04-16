@@ -45,6 +45,20 @@
 </ul>
 
 <main role="main" class="container">
+    {% if g.breadcrumbs %}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {% for crumb in g.breadcrumbs %}
+                    {% if crumb.url %}
+                        <li class="breadcrumb-item" aria-current="page"><a
+                                href="{{ crumb.url }}">{{ crumb.name }}</a></li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">{{ crumb.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+    {% endif %}
     {% block body %}
         <p>Content</p>
     {% endblock %}

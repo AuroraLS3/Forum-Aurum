@@ -6,6 +6,7 @@ from application.forms.messageform import MessageForm
 from application.models.area import Area
 from application.models.message import Message
 from application.models.topic import Topic
+from application.utils.breadcrumb import Crumb
 
 bp = Blueprint('topic', __name__, template_folder='templates', url_prefix='/forum/<area_name>/<created>')
 
@@ -23,6 +24,11 @@ def pull_lang_code(endpoint, values):
 
     g.area = area
     g.topic = topic
+    g.breadcrumbs = [
+        Crumb('Home', url_for('forum.forum_main')),
+        Crumb(g.area.name, url_for('area.area', area_name=g.area.name)),
+        Crumb(g.topic.name)
+    ]
 
 
 @bp.route("/")
