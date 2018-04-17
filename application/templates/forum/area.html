@@ -17,7 +17,17 @@
                         <li class="list-group-item" onclick="
                                 location.href = '{{ url_for('topic.topic', area_name=g.area.name, created=topic.created) }}'
                                 ">
-                            {{ topic.name }}
+                            <div class="float-left">
+                                <i class="fa-lg far fa-comment"></i>&nbsp;
+                            </div>
+                            <div class="float-left">
+                                {{ topic.name }}<br>
+                                <small>{{ topic.created }} by <b>{{ topic.account.username }}</b></small>
+                            </div>
+                            <div class="float-right">
+                                Last reply: <b>{{ topic.last_post_by() }}</b><br>
+                                <small> {{ topic.last_post_created() }}</small>
+                            </div>
                         </li>
                     {% endfor %}
                 {% else %}

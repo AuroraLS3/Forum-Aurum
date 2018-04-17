@@ -5,7 +5,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="float-left"><i class="fa fa-comment-alt"></i> {{ g.topic.name }}</h3>
+            <h3 class="float-left"><i class="fa fa-comment"></i> {{ g.topic.name }}</h3>
         </div>
         <ul class="list-group">
             {% if g.topic.messages %}
@@ -13,16 +13,18 @@
                     <div class="list-group-item">
                         <div class="row">
                             <div class="col-md-2">
-                                <h5>{{ message.account.username }}</h5>
                                 <p>{{ message.created }}</p>
+                                <h5>{{ message.account.username }}</h5>
                             </div>
                             <div class="col-md-9">
                                 <p>{{ message.content }}</p>
                             </div>
-                            <div class="col-md-1">
-                                <a href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">edit</a>
-                                <a href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">delete</a>
-                            </div>
+                            {% if message.account.username == current_user.username %}
+                                <div class="col-md-1">
+                                    <a href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">edit</a>
+                                    <a href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">delete</a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

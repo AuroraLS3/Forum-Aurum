@@ -19,3 +19,12 @@ class Topic(db.Model):
     def __init__(self, name, area_id):
         self.name = name
         self.area_id = area_id
+
+    def last_post(self):
+        return self.messages[-1]
+
+    def last_post_by(self):
+        return self.last_post().account.username
+
+    def last_post_created(self):
+        return self.last_post().created
