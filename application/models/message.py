@@ -5,7 +5,7 @@ class Message(db.Model):
     __tablename__ = "message"
 
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(100))
+    content = db.Column(db.String(1000))
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
 
     account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
