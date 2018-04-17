@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comments"></i> Areas</h3>
-            <a href={{ url_for('forum.create_area') }} class="btn btn-info float-right"><i class="fa fa-comments"></i>
+            <a href={{ url_for('forum.create_area') }} class="btn btn-info float-right"><i
+                class="fa fa-comments"></i>
             Create Area</a>
         </div>
         <div class="card-body">
@@ -26,5 +26,43 @@
             </ul>
         </div>
     </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="float-left"><i class="fa fa-chart-area"></i> Stats</h3>
+        </div>
+        <div class="card-body">
 
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>
+                                <span class="float-left">Most Active Area:</span>
+                                <span class="float-right"><b>General</b></span>
+                            </p><br>
+                            <p>
+                                <span class="float-left">Total Messages:</span>
+                                <span class="float-right"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>
+                                <span class="float-left">Hot Topic:</span>
+                                <span class="float-right">Does Anyone Play Cards?</span>
+                            </p><br>
+                            <p>
+                                <span class="float-left">Area with most stub threads:</span>
+                                <span class="float-right"><b>General</b></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

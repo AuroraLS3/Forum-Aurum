@@ -33,13 +33,26 @@
 </head>
 
 <body>
-{% if current_user.is_authenticated %}
-    <p>
-        Logged in as <b>{{ current_user.username }}</b> <a href="{{ url_for('auth.logout') }}">Logout</a>
-    </p>
-{% else %}
-    <a href="{{ url_for('auth.login_page') }}">Login</a> <a href="{{ url_for('auth.register_page') }}">Register</a>
-{% endif %}
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand">Forum Aurum</a>
+        </div>
+        {% if current_user.is_authenticated %}
+            <p>
+                Logged in as <b>{{ current_user.username }}</b>
+                <a class="btn btn-info" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out-alt"></i>
+                    Logout</a>
+            </p>
+        {% else %}
+            <div>
+                <a class="btn btn-info" href="{{ url_for('auth.login_page') }}"><i class="fa fa-sign-in-alt"></i> Login</a>
+                <a class="btn btn-info" href="{{ url_for('auth.register_page') }}"><i class="fa fa-users"></i> Register</a>
+            </div>
+        {% endif %}
+    </div>
+</nav>
+
 <ul>
     <li><a href="{{ url_for('users.users') }}">List registered users</a></li>
 </ul>

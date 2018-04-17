@@ -17,7 +17,9 @@
                                 <h5>{{ message.account.username }}</h5>
                             </div>
                             <div class="col-md-9">
-                                <p>{{ message.content }}</p>
+                                {% for para in message.content.split('\n') %}
+                                    <section>{{ para }}</section>
+                                {% endfor %}
                             </div>
                             {% if message.account.username == current_user.username %}
                                 <div class="col-md-1">

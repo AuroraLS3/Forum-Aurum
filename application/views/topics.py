@@ -19,6 +19,8 @@ def pull_lang_code(endpoint, values):
 
     topic = Topic.query.filter_by(area_id=area.id, created=values.pop('created')).first()
 
+    # topic.messages foreach msg msg.content
+
     if not topic:
         return redirect(url_for("area.area", area_name=area.name))
 
