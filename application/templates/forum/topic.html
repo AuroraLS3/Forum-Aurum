@@ -24,8 +24,14 @@
                             </div>
                             {% if message.account.username == current_user.username %}
                                 <div class="col-md-1">
-                                    <a href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">edit</a>
-                                    <a href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">delete</a>
+                                    <a title="Edit Message"
+                                       href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">
+                                        <i class="fa fa-edit text-secondary"></i>
+                                    </a>
+                                    <a title="Delete Message"
+                                       href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">
+                                        <i class="fa fa-trash-alt text-secondary"></i>
+                                    </a>
                                 </div>
                             {% endif %}
                         </div>
