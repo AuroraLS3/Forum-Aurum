@@ -4,9 +4,13 @@ from os import urandom
 
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_misaka import Misaka
+
+from application.utils.CustomMisakaRenderer import CustomMisakaRenderer
 
 app = Flask(__name__)
 Bootstrap(app)
+Misaka(app, renderer=CustomMisakaRenderer())
 
 from flask_sqlalchemy import SQLAlchemy
 

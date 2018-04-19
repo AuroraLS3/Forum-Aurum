@@ -9,7 +9,9 @@
         <div class="card-body">
             {% if form.message.data %}
                 <h3>Preview</h3>
-                <p>{{ form.message.data }}</p>
+                {% for para in form.message.data.split('\n') %}
+                    <section>{{ para|markdown(no_html=True, autolink=True) }}</section>
+                {% endfor %}
             {% endif %}
             {% if error %}
                 <div class="alert alert-danger" role="alert">
