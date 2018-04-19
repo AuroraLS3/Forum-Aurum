@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from application import db
 
 
@@ -17,3 +19,10 @@ class Message(db.Model):
     def __init__(self, content, topic_id):
         self.content = content
         self.topic_id = topic_id
+
+    @staticmethod
+    def find_message_count():
+        stmt = text("SELECT COUNT(*) as c FROM message LIMIT 1")
+        res = db.engine.execute(stmt)
+        for row in res:
+            return row[0]

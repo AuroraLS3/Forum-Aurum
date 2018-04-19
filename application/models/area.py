@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from application import db
 
 
@@ -16,3 +18,16 @@ class Area(db.Model):
         self.name = name
         self.description = description
         self.role_id = role_id
+
+    @staticmethod
+    def find_area_with_most_messages():
+        stmt = text("SELECT area.name, COUNT(*) as c FROM message"
+                    " JOIN topic on message.topic_id = topic.id"
+                    " JOIN area on topic.area_id = area.id"
+                    " GROUP BY area.id"
+                    " ORDER BY c DESC"
+                    " LIMIT 1"
+                    )
+        res = db.engine.execute(stmt)
+        for row in res:
+            return row[0]

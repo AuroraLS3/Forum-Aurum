@@ -4,7 +4,9 @@ from flask_login import login_required
 from application import db
 from application.forms.areaform import AreaForm
 from application.models.area import Area
+from application.models.message import Message
 from application.models.role import Role
+from application.models.topic import Topic
 from application.utils.breadcrumb import Crumb
 
 bp = Blueprint('forum', __name__, template_folder='templates')
@@ -23,7 +25,16 @@ def hello():
 @bp.route("/forum/")
 def forum_main():
     areas = Area.query.all()
-    return render_template("forum.html", areas=areas)
+    most_active_area = Area.find_area_with_most_messages()
+    message_count = Message.find_message_count()
+    hot_topic = Topic.find_hot_topic()
+    topic_count = Topic.find_topic_count()
+    return render_template("forum.html",
+                           areas=areas,
+                           most_active_area=most_active_area,
+                           message_count=message_count,
+                           hot_topic=hot_topic,
+                           topic_count=topic_count)
 
 
 @bp.route("/area/new/")

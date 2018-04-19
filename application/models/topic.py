@@ -1,3 +1,7 @@
+import os
+
+from sqlalchemy import text
+
 from application import db
 
 
@@ -28,3 +32,34 @@ class Topic(db.Model):
 
     def last_post_created(self):
         return self.last_post().created
+
+    @staticmethod
+    def find_topic_count():
+        stmt = text("SELECT COUNT(*) as c FROM topic LIMIT 1")
+        res = db.engine.execute(stmt)
+        for row in res:
+            return row[0]
+
+    @staticmethod
+    def find_hot_topic():
+        stmt = None
+        if os.environ.get("HEROKU"):
+            stmt = text("SELECT topic.name, COUNT(*) as c FROM message"
+                        " JOIN topic on message.topic_id = topic.id"
+                        " WHERE message.created > now() - INTERVAL '1 WEEK'"
+                        " GROUP BY topic.id"
+                        " ORDER BY c DESC"
+                        " LIMIT 1"
+                        )
+
+        else:
+            stmt = text("SELECT topic.name, COUNT(*) as c FROM message"
+                        " JOIN topic on message.topic_id = topic.id"
+                        " WHERE message.created > datetime('now', '-7 day')"
+                        " GROUP BY topic.id"
+                        " ORDER BY c DESC"
+                        " LIMIT 1"
+                        )
+        res = db.engine.execute(stmt)
+        for row in res:
+            return row[0]
