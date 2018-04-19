@@ -18,7 +18,8 @@
                             </div>
                             <div class="col-md-9">
                                 {% for para in message.content.split('\n') %}
-                                    <section>{{ para|markdown(no_html=True, autolink=True) }}</section>
+                                    <section
+                                            style="padding: 0;">{{ para|markdown(no_html=True, autolink=True) }}</section>
                                 {% endfor %}
                             </div>
                             {% if message.account.username == current_user.username %}

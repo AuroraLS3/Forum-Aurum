@@ -4,14 +4,15 @@
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3><i class="fa fa-comment-alt"></i> Start a new Topic</h3>
+            <h3><i class="fa fa-comment"></i> Edit a message</h3>
         </div>
         <div class="card-body">
             {% if form.message.data %}
                 <h3>Preview</h3>
                 {% for para in form.message.data.split('\n') %}
-                    <section>{{ para|markdown(no_html=True, autolink=True) }}</section>
+                    <section style="padding: 0;">{{ para|markdown(no_html=True, autolink=True) }}</section>
                 {% endfor %}
+                <br>
             {% endif %}
             {% if error %}
                 <div class="alert alert-danger" role="alert">
