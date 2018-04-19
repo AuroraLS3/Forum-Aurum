@@ -4,21 +4,23 @@
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comments"></i> Areas</h3>
-            <a href="{{ url_for('forum.create_area') }}" class="btn btn-info float-right"><i
-                    class="fa fa-comments"></i>
-                Create Area</a>
+            {% if current_user.is_authenticated and current_user.hasRole('moderator') %}
+                <a href="{{ url_for('forum.create_area') }}" class="btn btn-info float-right"><i
+                        class="fa fa-comments"></i>
+                    Create Area</a>
+            {% endif %}
         </div>
         <div class="card-body">
             <ul class="list-group">
                 {% if areas %}
                     {% for area in areas %}
-
-                        <li class="list-group-item" onclick=
-                                "location.href = '{{ url_for('area.area', area_name=area.name) }}'
-                                        ">
-                            <i class="far fa-comment-alt"></i> {{ area.name }}
-                        </li>
-
+                        {% if area.required_role.name == 'anyone' or current_user.hasRole(area.required_role.name) %}
+                            <li class="list-group-item" onclick=
+                                    "location.href = '{{ url_for('area.area', area_name=area.name) }}'
+                                            ">
+                                <i class="far fa-comment-alt"></i> {{ area.name }}
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 {% else %}
                     <p>No Areas. Create one! :)</p>

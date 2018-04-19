@@ -32,3 +32,9 @@ class User(db.Model):
 
     def is_authenticated(self):
         return True
+
+    def hasRole(self, role):
+        for r in self.roles:
+            if r.name == role:
+                return True
+        return False
