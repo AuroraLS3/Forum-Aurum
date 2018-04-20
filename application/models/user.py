@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from application import db
 
 from application.models.user_role import UserRole
@@ -38,3 +40,10 @@ class User(db.Model):
             if r.name == role:
                 return True
         return False
+
+    @staticmethod
+    def find_user_count():
+        stmt = text("SELECT COUNT(*) as c FROM account LIMIT 1")
+        res = db.engine.execute(stmt)
+        for row in res:
+            return row[0]

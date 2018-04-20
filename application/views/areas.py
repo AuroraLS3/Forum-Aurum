@@ -1,5 +1,5 @@
 from flask import Blueprint, g, render_template, request, url_for, redirect
-from flask_login import login_required, current_user
+from flask_login import current_user, login_required
 
 from application import db
 from application.forms.topicform import TopicForm
@@ -14,6 +14,7 @@ bp = Blueprint('area', __name__, template_folder='templates', url_prefix='/forum
 @bp.url_value_preprocessor
 def fetch_area(endpoint, values):
     g.area = Area.query.filter_by(name=values.pop('area_name')).first()
+    g.required_role = g.area.required_role.name
     g.breadcrumbs = [
         Crumb('Home', url_for('forum.forum_main')),
         Crumb(g.area.name)
@@ -40,6 +41,7 @@ def create_topic_page():
 
 
 @bp.route("/topic/new/", methods=['POST'])
+@login_required
 def create_topic():
     form = TopicForm(request.form)
 

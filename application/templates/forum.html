@@ -14,7 +14,7 @@
             <ul class="list-group">
                 {% if areas %}
                     {% for area in areas %}
-                        {% if area.required_role.name == 'anyone' or current_user.hasRole(area.required_role.name) %}
+                        {% if area.required_role.name == 'anyone' or current_user.is_authenticated and current_user.hasRole(area.required_role.name) %}
                             <li class="list-group-item" onclick=
                                     "location.href = '{{ url_for('area.area', area_name=area.name) }}'
                                             ">

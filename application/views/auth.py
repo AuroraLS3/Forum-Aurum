@@ -6,6 +6,7 @@ from application import db
 from application.forms.loginform import LoginForm
 from application.forms.registerform import RegisterForm
 from application.models.user import User
+from application.models.role import Role
 
 bp = Blueprint('auth', __name__, template_folder='templates', url_prefix='/auth')
 
@@ -32,6 +33,10 @@ def register():
 
     hashpw = bcrypt.hashpw(password, bcrypt.gensalt())
     registeringUser = User(username, hashpw)
+    if User.find_user_count() == 0:
+        registeringUser.roles.extend(Role.query.all())
+    else:
+        registeringUser.roles.append(Role.query.filter_by(name='guest').first())
 
     db.session().add(registeringUser)
     db.session().commit()
