@@ -1,7 +1,6 @@
 from flask import Blueprint, redirect, url_for, render_template, request, g
-from flask_login import login_required
 
-from application import db
+from application import db, login_required
 from application.forms.areaform import AreaForm
 from application.models.area import Area
 from application.models.message import Message
@@ -38,7 +37,7 @@ def forum_main():
 
 
 @bp.route("/area/new/")
-@login_required
+@login_required(role='moderator')
 def create_area_page():
     g.breadcrumbs = [Crumb('Home', url_for("forum.forum_main"))]
     form = AreaForm()
@@ -48,7 +47,7 @@ def create_area_page():
 
 
 @bp.route("/area/new/", methods=["POST"])
-@login_required
+@login_required(role='moderator')
 def create_area():
     form = AreaForm(request.form)
 

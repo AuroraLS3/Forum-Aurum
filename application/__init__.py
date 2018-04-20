@@ -4,8 +4,8 @@ from functools import wraps
 from os import urandom
 
 from flask import Flask, g
-from flask_login import LoginManager, current_user
 from flask_bootstrap import Bootstrap
+from flask_login import LoginManager, current_user
 from flask_misaka import Misaka
 
 from application.utils.CustomMisakaRenderer import CustomMisakaRenderer
@@ -30,15 +30,18 @@ def login_required(role="anyone"):
         @wraps(fn)
         def decorated_view(*args, **kwargs):
             req_role = role
-            if not current_user.is_authenticated():
+            if not current_user.is_authenticated:
                 return login_manager.unauthorized()
 
-            if g.required_role is not None:
-                req_role = g.required_role
+            try:
+                if g.required_role is not None:
+                    req_role = g.required_role
+            except AttributeError:
+                None
 
             unauthorized = False
 
-            if req_role is not "anyone":
+            if req_role != "anyone":
                 unauthorized = not current_user.hasRole(role)
 
             if unauthorized:

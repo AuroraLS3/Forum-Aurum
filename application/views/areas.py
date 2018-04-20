@@ -1,7 +1,7 @@
 from flask import Blueprint, g, render_template, request, url_for, redirect
-from flask_login import current_user, login_required
+from flask_login import current_user
 
-from application import db
+from application import db, login_required
 from application.forms.topicform import TopicForm
 from application.models.area import Area
 from application.models.message import Message
@@ -14,6 +14,8 @@ bp = Blueprint('area', __name__, template_folder='templates', url_prefix='/forum
 @bp.url_value_preprocessor
 def fetch_area(endpoint, values):
     g.area = Area.query.filter_by(name=values.pop('area_name')).first()
+    if not g.area:
+        return redirect(url_for("forum.forum_main"))
     g.required_role = g.area.required_role.name
     g.breadcrumbs = [
         Crumb('Home', url_for('forum.forum_main')),
@@ -22,16 +24,15 @@ def fetch_area(endpoint, values):
 
 
 @bp.route("/")
-@login_required
+@login_required()
 def area():
     if not g.area:
         return redirect(url_for("forum.forum_main"))
-
     return render_template("forum/area.html")
 
 
 @bp.route("/topic/new/")
-@login_required
+@login_required()
 def create_topic_page():
     g.breadcrumbs = [
         Crumb('Home', url_for('forum.forum_main')),
@@ -41,7 +42,7 @@ def create_topic_page():
 
 
 @bp.route("/topic/new/", methods=['POST'])
-@login_required
+@login_required()
 def create_topic():
     form = TopicForm(request.form)
 

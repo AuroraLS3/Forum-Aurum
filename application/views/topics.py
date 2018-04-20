@@ -1,7 +1,7 @@
 from flask import Blueprint, g, render_template, redirect, url_for, request
-from flask_login import login_required, current_user
+from flask_login import current_user
 
-from application import db
+from application import db, login_required
 from application.forms.messageform import MessageForm
 from application.models.area import Area
 from application.models.message import Message
@@ -16,6 +16,7 @@ def pull_lang_code(endpoint, values):
     area = Area.query.filter_by(name=values.pop('area_name')).first()
     if not area:
         return redirect(url_for("forum.forum_main"))
+    g.required_role = g.area.required_role.name
 
     topic = Topic.query.filter_by(area_id=area.id, created=values.pop('created')).first()
 
@@ -39,7 +40,7 @@ def topic():
 
 
 @bp.route("/comment/")
-@login_required
+@login_required()
 def add_msg_page():
     return render_template("forum/message_new.html",
                            action=url_for('topic.add_msg', area_name=g.area.name, created=g.topic.created),
@@ -47,7 +48,7 @@ def add_msg_page():
 
 
 @bp.route("/comment/", methods=["POST"])
-@login_required
+@login_required()
 def add_msg():
     form = MessageForm(request.form)
 
@@ -62,7 +63,7 @@ def add_msg():
 
 
 @bp.route("/edit/<msg_id>/")
-@login_required
+@login_required()
 def edit_msg_page(msg_id):
     old_content = Message.query.get(msg_id).content
     form = MessageForm()
@@ -73,7 +74,7 @@ def edit_msg_page(msg_id):
 
 
 @bp.route("/delete/<msg_id>/")
-@login_required
+@login_required()
 def delete_msg(msg_id):
     Message.query.filter_by(id=msg_id).delete()
     db.session().commit()
@@ -82,7 +83,7 @@ def delete_msg(msg_id):
 
 
 @bp.route("/edit/<msg_id>/", methods=["POST"])
-@login_required
+@login_required()
 def edit_msg(msg_id):
     message = Message.query.get(msg_id)
     form = MessageForm(request.form)
