@@ -16,7 +16,7 @@ def pull_lang_code(endpoint, values):
     area = Area.query.filter_by(name=values.pop('area_name')).first()
     if not area:
         return redirect(url_for("forum.forum_main"))
-    g.required_role = g.area.required_role.name
+    g.required_role = area.required_role.name
 
     topic = Topic.query.filter_by(area_id=area.id, created=values.pop('created')).first()
 
