@@ -28,7 +28,7 @@ class Topic(db.Model):
         return self.messages[-1]
 
     def last_post_by(self):
-        return self.last_post().account.username
+        return self.last_post().account.name
 
     def last_post_created(self):
         return self.last_post().created

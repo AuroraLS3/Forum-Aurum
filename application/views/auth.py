@@ -5,8 +5,8 @@ from flask_login import login_user, logout_user
 from application import db
 from application.forms.loginform import LoginForm
 from application.forms.registerform import RegisterForm
-from application.models.user import User
 from application.models.role import Role
+from application.models.user import User
 
 bp = Blueprint('auth', __name__, template_folder='templates', url_prefix='/auth')
 
@@ -23,16 +23,16 @@ def register():
     if not form.validate():
         return render_template("auth/register.html", form=form)
 
-    username = form.username.data
+    name = form.name.data
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(name=name).first()
     if (user is not None):
         return render_template("auth/register.html", form=form, error="User Already Exists!")
 
     password = form.password.data.encode()
 
     hashpw = bcrypt.hashpw(password, bcrypt.gensalt())
-    registeringUser = User(username, hashpw)
+    registeringUser = User(name, hashpw)
     if User.find_user_count() == 0:
         registeringUser.roles.extend(Role.query.all())
     else:
@@ -41,7 +41,7 @@ def register():
     db.session().add(registeringUser)
     db.session().commit()
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(name=name).first()
     login_user(user)
     return redirect(url_for("forum.forum_main"))
 
@@ -64,9 +64,9 @@ def login():
     if not form.validate():
         return render_template("auth/login.html", form=form)
 
-    username = form.username.data
+    name = form.name.data
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(name=name).first()
 
     if user is None:
         return render_template("auth/login.html", form=form, error="User doesn't exist")

@@ -40,7 +40,7 @@
         </div>
         {% if current_user.is_authenticated %}
             <p>
-                Logged in as <b>{{ current_user.username }}</b>
+                Logged in as <b>{{ current_user.name }}</b>
                 <a class="btn btn-info" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out-alt"></i>
                     Logout</a>
             </p>

@@ -13,7 +13,7 @@
                 </div>
             {% endif %}
             <form method="POST" action="{{ url_for('auth.register') }}">
-                {{ wtf.form_field(form.username, class='form-control', placeholder='Username') }}
+                {{ wtf.form_field(form.name, class='form-control', placeholder='Username') }}
                 {{ wtf.form_field(form.password, class='form-control') }}
                 {{ wtf.form_field(form.password_again, class='form-control') }}
                 <input class="btn btn-info" type="submit" value="Register new user"/>

@@ -14,7 +14,7 @@
                         <div class="row">
                             <div class="col-md-2">
                                 <p>{{ message.created }}</p>
-                                <h5>{{ message.account.username }}</h5>
+                                <h5>{{ message.account.name }}</h5>
                             </div>
                             <div class="col-md-9">
                                 {% for para in message.content.split('\n') %}
@@ -22,7 +22,7 @@
                                             style="padding: 0;">{{ para|markdown(no_html=True, autolink=True) }}</section>
                                 {% endfor %}
                             </div>
-                            {% if message.account.username == current_user.username %}
+                            {% if message.account.name == current_user.name %}
                                 <div class="col-md-1">
                                     <a title="Edit Message"
                                        href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">

@@ -20,8 +20,6 @@ def pull_lang_code(endpoint, values):
 
     g.topic = Topic.query.filter_by(area_id=g.area.id, created=values.pop('created')).first()
 
-    # topic.messages foreach msg msg.content
-
     if not g.topic:
         return
 

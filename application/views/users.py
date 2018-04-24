@@ -11,6 +11,6 @@ bp = Blueprint('users', __name__, template_folder='templates')
 def users():
     users = User.query.all()
     for user in users:
-        user.username = user.username
+        user.name = user.name
         user.password = user.password.decode()
     return render_template("users.html", users=users)

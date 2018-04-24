@@ -1,7 +1,6 @@
 from sqlalchemy import text
 
 from application import db
-
 from application.models.user_role import UserRole
 
 
@@ -9,7 +8,7 @@ class User(db.Model):
     __tablename__ = "account"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100))
+    name = db.Column(db.String(100))
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
     password = db.Column(db.String(75))
 
@@ -19,8 +18,8 @@ class User(db.Model):
 
     roles = db.relationship('Role', secondary=UserRole, backref='User')
 
-    def __init__(self, username, hashedPassword):
-        self.username = username
+    def __init__(self, name, hashedPassword):
+        self.name = name
         self.password = hashedPassword
 
     def get_id(self):
