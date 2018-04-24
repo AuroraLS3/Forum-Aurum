@@ -23,11 +23,15 @@ def fetch_area(endpoint, values):
     ]
 
 
+@bp.before_request
+def possible_redirect(f=None):
+    if not g.area:
+        return redirect(url_for("forum.forum_main"))
+
+
 @bp.route("/")
 @login_required()
 def area():
-    if not g.area:
-        return redirect(url_for("forum.forum_main"))
     return render_template("forum/area.html")
 
 
