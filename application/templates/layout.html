@@ -41,6 +41,10 @@
         {% if current_user.is_authenticated %}
             <p>
                 Logged in as <b>{{ current_user.name }}</b>
+                {% if current_user.hasRole('moderator') %}
+                    <a class="btn btn-info" href="{{ url_for('users.users') }}"><i class="fa fa-users"></i>
+                        Manage Users</a>
+                {% endif %}
                 <a class="btn btn-info" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out-alt"></i>
                     Logout</a>
             </p>

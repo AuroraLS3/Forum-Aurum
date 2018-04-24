@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="float-left"><i class="fa fa-users"></i> Users</h3>
+            <a href="{{ url_for('auth.register_page') }}"
+               class="btn btn-info float-right"><i
+                    class="fa fa-user-plus"></i> Register a new User
+            </a>
+        </div>
+        <div class="card-body">
+            <p>Select multiple roles when changing roles. Roles do not inherit permissions from other roles, so multiple
+                may be required for full forum experience.</p>
+            <ul class="list-group">
+                {% if users %}
+                    {% for user in users %}
+                        <li class="list-group-item">
+                            <div class="float-left">
+                                <i class="fa-lg far fa-user"></i>&nbsp;
+                            </div>
+                            <div class="float-left">
+                                {{ user.name }}<br>
+                                <small>| {% for name in user.roleNames() %}{{ name }} | {% endfor %}</small>
+                            </div>
+                            <div class="float-right">
+                                <form class="form-inline" method="POST"
+                                      action="{{ url_for("users.edit", user_name=user.name) }}">
+                                    {{ wtf.form_field(user.form.roles, class='form-control') }}
+                                    <input class="btn btn-info" type="submit" value="Submit">
+                                    <a class="btn btn-danger" href="{{ url_for('users.delete', user_name=user.name) }}"><i
+                                            class="fa fa-trash"></i> Delete</a>
+                                </form>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p><i class="fa fa-users"></i> No users have registered</p>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

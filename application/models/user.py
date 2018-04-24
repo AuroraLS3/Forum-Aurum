@@ -40,6 +40,9 @@ class User(db.Model):
                 return True
         return False
 
+    def roleNames(self):
+        return list(map(lambda role: role.name, self.roles))
+
     @staticmethod
     def find_user_count():
         stmt = text("SELECT COUNT(*) as c FROM account LIMIT 1")
