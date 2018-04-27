@@ -24,9 +24,13 @@
 - I can promote Guests to Member role
 - I can create new areas and select role that can see them
 - I can remove Guest and Member users
+- I am protected from role changes by Moderators
+- I am protected from user removal by Moderators (Unless Moderator role is revoked)
 
 ### As an Admin
 
 - I can do everything a Moderator can
 - I can change roles of any account
 - I can remove any account
+- I am protected from role changes by Moderators
+- I am protected from user removal (Unless Admin role is revoked)
