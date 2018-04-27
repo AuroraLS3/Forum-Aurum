@@ -43,14 +43,6 @@ def topic():
     return render_template("forum/topic.html", form=MessageForm())
 
 
-@bp.route("/comment/")
-@login_required()
-def add_msg_page():
-    return render_template("forum/message_new.html",
-                           action=url_for('topic.add_msg', area_name=g.area.name, created=g.topic.created),
-                           )
-
-
 @bp.route("/comment/", methods=["POST"])
 @login_required()
 def add_msg():
@@ -69,7 +61,12 @@ def add_msg():
 @bp.route("/edit/<msg_id>/")
 @login_required()
 def edit_msg_page(msg_id):
-    old_content = Message.query.get(msg_id).content
+    message = Message.query.get(msg_id)
+
+    if current_user.id is not message.account_id:
+        return redirect(url_for("topic", area_name=g.area.name, created=g.topic.created))
+
+    old_content = message.content
     form = MessageForm()
     form.message.data = old_content
     return render_template("forum/message_new.html",
@@ -83,7 +80,11 @@ def delete_msg(msg_id):
     first_msg_id = g.topic.messages[0].id
     topic_id = g.topic.id
 
-    print(msg_id, first_msg_id)
+    message = Message.query.get(msg_id)
+
+    if not (current_user.id == message.account_id or current_user.hasRole('moderator')):
+        return redirect(url_for("topic", area_name=g.area.name, created=g.topic.created))
+
     if str(first_msg_id) == str(msg_id):
         # If first message, delete topic and it's messages.
         Message.query.filter_by(topic_id=topic_id).delete()
@@ -100,6 +101,10 @@ def delete_msg(msg_id):
 @login_required()
 def edit_msg(msg_id):
     message = Message.query.get(msg_id)
+
+    if current_user.id is not message.account_id:
+        return redirect(url_for("topic", area_name=g.area.name, created=g.topic.created))
+
     form = MessageForm(request.form)
 
     message.content = form.message.data

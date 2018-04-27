@@ -10,6 +10,10 @@
             crossorigin="anonymous"></script>
     <title>Forum Aurum</title>
     <style>
+        .clickable {
+            cursor: pointer;
+        }
+
         .wrapper {
             font-family: 'arial', sans-serif;
         }
@@ -36,7 +40,9 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand">Forum Aurum</a>
+            <a class="navbar-brand clickable" onclick=
+                    "location.href = '{{ url_for('forum.forum_main') }}'
+                            ">Forum Aurum</a>
         </div>
         {% if current_user.is_authenticated %}
             <p>

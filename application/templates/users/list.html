@@ -12,6 +12,11 @@
             </a>
         </div>
         <div class="card-body">
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
             <p>Select multiple roles when changing roles. Roles do not inherit permissions from other roles, so multiple
                 may be required for full forum experience.</p>
             <ul class="list-group">
@@ -24,15 +29,20 @@
                             <div class="float-left">
                                 {{ user.name }}<br>
                                 <small>| {% for name in user.roleNames() %}{{ name }} | {% endfor %}</small>
+
                             </div>
                             <div class="float-right">
-                                <form class="form-inline" method="POST"
-                                      action="{{ url_for("users.edit", user_name=user.name) }}">
-                                    {{ wtf.form_field(user.form.roles, class='form-control') }}
-                                    <input class="btn btn-info" type="submit" value="Submit">
-                                    <a class="btn btn-danger" href="{{ url_for('users.delete', user_name=user.name) }}"><i
-                                            class="fa fa-trash"></i> Delete</a>
-                                </form>
+                                {% if not ((user.hasRole('moderator') or user.hasRole('admin')) and not current_user.hasRole('admin')) %}
+                                    <form class="form-inline" method="POST"
+                                          action="{{ url_for("users.edit", user_name=user.name) }}">
+                                        {{ wtf.form_field(user.form.roles, class='form-control') }}
+                                        <input class="btn btn-info" type="submit" value="Change Roles">
+                                        &nbsp;&nbsp;
+                                        <a title="Remove User" class="btn btn-danger"
+                                           href="{{ url_for('users.delete', user_name=user.name) }}"><i
+                                                class="fa fa-user-times"></i></a>
+                                    </form>
+                                {% endif %}
                             </div>
                         </li>
                     {% endfor %}

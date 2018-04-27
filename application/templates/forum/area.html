@@ -14,7 +14,7 @@
             <ul class="list-group">
                 {% if g.area.topics %}
                     {% for topic in g.area.topics %}
-                        <li class="list-group-item" onclick="
+                        <li class="list-group-item clickable" onclick="
                                 location.href = '{{ url_for('topic.topic', area_name=g.area.name, created=topic.created) }}'
                                 ">
                             <div class="float-left">

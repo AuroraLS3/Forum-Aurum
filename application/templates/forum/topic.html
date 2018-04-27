@@ -22,18 +22,22 @@
                                             style="padding: 0;">{{ para|markdown(no_html=True, autolink=True) }}</section>
                                 {% endfor %}
                             </div>
-                            {% if message.account.name == current_user.name %}
-                                <div class="col-md-1">
+
+                            <div class="col-md-1">
+                                {% if message.account.name == current_user.name %}
                                     <a title="Edit Message"
                                        href="{{ url_for('topic.edit_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">
                                         <i class="fa fa-edit text-secondary"></i>
                                     </a>
+                                {% endif %}
+                                {% if message.account.name == current_user.name or current_user.hasRole('moderator') %}
                                     <a title="Delete Message"
                                        href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">
                                         <i class="fa fa-trash-alt text-secondary"></i>
                                     </a>
-                                </div>
-                            {% endif %}
+                                {% endif %}
+                            </div>
+
                         </div>
                     </div>
                 {% endfor %}
