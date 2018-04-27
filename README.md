@@ -13,5 +13,5 @@ Create a functional forum web application with areas, threads and messages as we
 ## Documentation
 
 - [User Stories](documentation/UserStories.md)
-- [Database Schema](documentation/drawio/img/schema_v1.jpg)
+- [Database Schema](documentation/drawio/img/Schema-v3.png)
 - [Basic Usage](https://github.com/Rsl1122/Forum-Aurum/wiki)
