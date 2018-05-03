@@ -10,7 +10,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    password = db.Column(db.String(75))
+    password = db.Column(db.String(150))
 
     topics = db.relationship("Topic", back_populates='account', lazy=True)
 
