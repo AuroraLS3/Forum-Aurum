@@ -11,7 +11,7 @@
 CREATE TABLE role (
   id SERIAL NOT NULL, 
   name VARCHAR(100), 
- 	PRIMARY KEY (id)
+  PRIMARY KEY (id)
 );
 ```
 ### Account table
@@ -69,7 +69,7 @@ CREATE TABLE message (
  	account_id INTEGER NOT NULL, 
  	topic_id INTEGER NOT NULL, 
  	PRIMARY KEY (id), 
-  FOREIGN KEY(account_id) REFERENCES account (id), 
+ 	FOREIGN KEY(account_id) REFERENCES account (id), 
  	FOREIGN KEY(topic_id) REFERENCES topic (id)
 );
 ```
