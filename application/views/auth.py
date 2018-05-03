@@ -29,9 +29,9 @@ def register():
     if (user is not None):
         return render_template("auth/register.html", form=form, error="User Already Exists!")
 
-    password = form.password.data.encode()
+    password = form.password.data.encode()  # bcrypt requires utf-8 encoded bytes
 
-    hashpw = bcrypt.hashpw(password, bcrypt.gensalt()).decode()
+    hashpw = bcrypt.hashpw(password, bcrypt.gensalt()).decode()  # bcrypt returns utf-8 bytes which are decoded
     registeringUser = User(name, hashpw)
     if User.find_user_count() == 0:
         registeringUser.roles.extend(Role.query.all())
@@ -71,7 +71,7 @@ def login():
     if user is None:
         return render_template("auth/login.html", form=form, error="User doesn't exist")
 
-    password = form.password.data.encode()
+    password = form.password.data.encode()  # bcrypt requires utf-8 encoded bytes
     correctPass = bcrypt.checkpw(password, user.password.encode())
 
     if not correctPass:
