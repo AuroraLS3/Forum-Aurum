@@ -2,7 +2,7 @@
 
 ## Table schema
 
-![schema](https://github.com/Rsl1122/Forum-Aurum/blob/master/documentation/drawio/img/Schema-v3.1.png?raw=true)
+![schema](https://github.com/Rsl1122/Forum-Aurum/blob/master/documentation/drawio/img/Schema-v3.2.png?raw=true)
 
 ## Create Table statements (PostGreSQL)
 
