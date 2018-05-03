@@ -31,7 +31,7 @@ def register():
 
     password = form.password.data.encode()
 
-    hashpw = bcrypt.hashpw(password, bcrypt.gensalt())
+    hashpw = bcrypt.hashpw(password, bcrypt.gensalt()).decode()
     registeringUser = User(name, hashpw)
     if User.find_user_count() == 0:
         registeringUser.roles.extend(Role.query.all())
@@ -72,7 +72,7 @@ def login():
         return render_template("auth/login.html", form=form, error="User doesn't exist")
 
     password = form.password.data.encode()
-    correctPass = bcrypt.checkpw(password, user.password)
+    correctPass = bcrypt.checkpw(password, user.password.encode())
 
     if not correctPass:
         return render_template("auth/login.html", form=form, error="Incorrect Password")
