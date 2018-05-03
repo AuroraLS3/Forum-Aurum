@@ -2,16 +2,16 @@
 
 ## Table schema
 
-![schema](https://github.com/Rsl1122/Forum-Aurum/blob/master/documentation/drawio/img/Schema-v3.png?raw=true)
+![schema](https://github.com/Rsl1122/Forum-Aurum/blob/master/documentation/drawio/img/Schema-v3.1.png?raw=true)
 
 ## Create Table statements (PostGreSQL)
 
 ### Role table
 ```
 CREATE TABLE role (
-  id SERIAL NOT NULL, 
-  name VARCHAR(100), 
-  PRIMARY KEY (id)
+ 	id SERIAL NOT NULL, 
+ 	name VARCHAR(100), 
+ 	PRIMARY KEY (id)
 );
 ```
 ### Account table
