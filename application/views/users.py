@@ -24,7 +24,9 @@ def users():
             print("ROLEFORM")
             user.form = RoleForm()
 
-    return render_template("users/list.html", users=all_users)
+    error = request.args.get('error')
+
+    return render_template("users/list.html", users=all_users, error=error)
 
 
 @bp.route("/<user_name>/", methods=["POST"])
@@ -40,8 +42,8 @@ def edit(user_name):
 
     if (Role.query.filter_by(name='admin') in new_roles or Role.query.filter_by(
             name='moderator') in new_roles) and not is_admin:
-        return render_template("users/list.html", users=User.query.all(),
-                               error="You can't modify admin or moderator users if you are not an admin!")
+        return redirect(url_for("users.users",
+                                error="You can't modify admin or moderator users if you are not an admin!"))
 
     user.roles = new_roles
     db.session().commit()
@@ -56,8 +58,8 @@ def delete(user_name):
 
     # Check if 'admin' is in list of role names the user we are deleting has
     if 'admin' in list(map(lambda role: role.name, user.roles)):
-        return render_template("users/list.html", users=User.query.all(),
-                               error="Admin accounts can not be removed!")
+        return redirect(url_for("users.users",
+                                error="Admin accounts can not be removed!"))
 
     user.roles = [Role.query.filter_by(name='guest').first()]
     db.session().commit()
