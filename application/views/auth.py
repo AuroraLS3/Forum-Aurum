@@ -32,10 +32,14 @@ def register():
     password = form.password.data.encode()  # bcrypt requires utf-8 encoded bytes
 
     hashpw = bcrypt.hashpw(password, bcrypt.gensalt()).decode()  # bcrypt returns utf-8 bytes which are decoded
+
     registeringUser = User(name, hashpw)
+
     if User.find_user_count() == 0:
-        registeringUser.roles.extend(Role.query.all())
+        # If user is first user to register, give them all roles except anyone
+        registeringUser.roles.extend(Role.query.filter(Role.name != 'anyone').all())
     else:
+        # If user is not first user to register, give them the guest role
         registeringUser.roles.append(Role.query.filter_by(name='guest').first())
 
     db.session().add(registeringUser)
