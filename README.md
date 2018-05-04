@@ -15,3 +15,4 @@ Create a functional forum web application with areas, threads and messages as we
 - [User Stories](documentation/UserStories.md)
 - [Database](documentation/database.md)
 - [Basic Usage](https://github.com/Rsl1122/Forum-Aurum/wiki)
+- [Experiences](https://github.com/Rsl1122/Forum-Aurum/wiki/Experiences)
