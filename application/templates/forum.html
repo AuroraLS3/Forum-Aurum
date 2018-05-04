@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">
             <h3 class="float-left"><i class="fa fa-comments"></i> Areas</h3>
-            {% if current_user.is_authenticated and current_user.hasRole('moderator') %}
+            {% if current_user.is_authenticated and current_user.has_role('moderator') %}
                 <a href="{{ url_for('forum.create_area') }}" class="btn btn-info float-right"><i
                         class="fa fa-comments"></i>
                     Create Area</a>
@@ -14,7 +14,7 @@
             <ul class="list-group">
                 {% if areas %}
                     {% for area in areas %}
-                        {% if area.required_role.name == 'anyone' or current_user.is_authenticated and current_user.hasRole(area.required_role.name) %}
+                        {% if area.required_role.name == 'anyone' or current_user.is_authenticated and current_user.has_role(area.required_role.name) %}
                             <li title="{{ area.description }}" class="list-group-item clickable" onclick=
                                     "location.href = '{{ url_for('area.area', area_name=area.name) }}'
                                             ">

@@ -49,11 +49,11 @@ def add_msg():
     form = MessageForm(request.form)
 
     content = form.message.data
-    newMsg = Message(content, g.topic.id)
+    new_msg = Message(content, g.topic.id)
 
-    newMsg.account_id = current_user.id
+    new_msg.account_id = current_user.id
 
-    db.session().add(newMsg)
+    db.session().add(new_msg)
     db.session().commit()
     return redirect(url_for("topic.topic", area_name=g.area.name, created=g.topic.created))
 
@@ -82,7 +82,7 @@ def delete_msg(msg_id):
 
     message = Message.query.get(msg_id)
 
-    if not (current_user.id == message.account_id or current_user.hasRole('moderator')):
+    if not (current_user.id == message.account_id or current_user.has_role('moderator')):
         return redirect(url_for("topic", area_name=g.area.name, created=g.topic.created))
 
     if str(first_msg_id) == str(msg_id):

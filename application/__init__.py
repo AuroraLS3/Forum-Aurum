@@ -43,7 +43,7 @@ def login_required(role="anyone"):
             unauthorized = False
 
             if req_role != "anyone":
-                unauthorized = not current_user.hasRole(req_role)
+                unauthorized = not current_user.has_role(req_role)
 
             if unauthorized:
                 return login_manager.unauthorized()

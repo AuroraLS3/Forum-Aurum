@@ -57,9 +57,9 @@ def create_area():
     name = form.name.data
     description = form.description.data
 
-    newArea = Area(name, description, form.role.data.id)
+    new_area = Area(name, description, form.role.data.id)
 
-    db.session().add(newArea)
+    db.session().add(new_area)
     db.session().commit()
 
     return redirect(url_for("area.area", area_name=name))

@@ -28,11 +28,11 @@
                             </div>
                             <div class="float-left">
                                 {{ user.name }}<br>
-                                <small>| {% for name in user.roleNames() %}{{ name }} | {% endfor %}</small>
+                                <small>| {% for name in user.role_names() %}{{ name }} | {% endfor %}</small>
 
                             </div>
                             <div class="float-right">
-                                {% if not ((user.hasRole('moderator') or user.hasRole('admin')) and not current_user.hasRole('admin')) %}
+                                {% if not ((user.has_role('moderator') or user.has_role('admin')) and not current_user.has_role('admin')) %}
                                     <form class="form-inline" method="POST"
                                           action="{{ url_for("users.edit", user_name=user.name) }}">
                                         {{ wtf.form_field(user.form.roles, class='form-control') }}

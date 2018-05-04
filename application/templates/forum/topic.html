@@ -28,7 +28,7 @@
                                         <i class="fa fa-edit text-secondary"></i>
                                     </a>
                                 {% endif %}
-                                {% if message.account.name == current_user.name or current_user.hasRole('moderator') %}
+                                {% if message.account.name == current_user.name or current_user.has_role('moderator') %}
                                     <a title="Delete Message"
                                        href="{{ url_for('topic.delete_msg', msg_id=message.id, area_name=g.area.name, created=g.topic.created) }}">
                                         <i class="fa fa-trash-alt text-secondary"></i>

@@ -55,18 +55,18 @@ def create_topic():
 
     name = form.name.data
 
-    newTopic = Topic(name, g.area.id)
-    newTopic.account_id = current_user.id
+    new_topic = Topic(name, g.area.id)
+    new_topic.account_id = current_user.id
 
-    db.session().add(newTopic)
+    db.session().add(new_topic)
     db.session().commit()
 
     message = form.message.data
 
-    newMsg = Message(message, newTopic.id)
-    newMsg.account_id = current_user.id
+    new_msg = Message(message, new_topic.id)
+    new_msg.account_id = current_user.id
 
-    db.session().add(newMsg)
+    db.session().add(new_msg)
     db.session().commit()
 
-    return redirect(url_for("topic.topic", area_name=g.area.name, created=newTopic.created))
+    return redirect(url_for("topic.topic", area_name=g.area.name, created=new_topic.created))

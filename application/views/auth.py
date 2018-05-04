@@ -26,23 +26,23 @@ def register():
     name = form.name.data
 
     user = User.query.filter_by(name=name).first()
-    if (user is not None):
+    if user is not None:
         return render_template("auth/register.html", form=form, error="User Already Exists!")
 
     password = form.password.data.encode()  # bcrypt requires utf-8 encoded bytes
 
-    hashpw = bcrypt.hashpw(password, bcrypt.gensalt()).decode()  # bcrypt returns utf-8 bytes which are decoded
+    hash_pw = bcrypt.hashpw(password, bcrypt.gensalt()).decode()  # bcrypt returns utf-8 bytes which are decoded
 
-    registeringUser = User(name, hashpw)
+    registering_user = User(name, hash_pw)
 
     if User.find_user_count() == 0:
         # If user is first user to register, give them all roles except anyone
-        registeringUser.roles.extend(Role.query.filter(Role.name != 'anyone').all())
+        registering_user.roles.extend(Role.query.filter(Role.name != 'anyone').all())
     else:
         # If user is not first user to register, give them the guest role
-        registeringUser.roles.append(Role.query.filter_by(name='guest').first())
+        registering_user.roles.append(Role.query.filter_by(name='guest').first())
 
-    db.session().add(registeringUser)
+    db.session().add(registering_user)
     db.session().commit()
 
     user = User.query.filter_by(name=name).first()
@@ -76,9 +76,9 @@ def login():
         return render_template("auth/login.html", form=form, error="User doesn't exist")
 
     password = form.password.data.encode()  # bcrypt requires utf-8 encoded bytes
-    correctPass = bcrypt.checkpw(password, user.password.encode())
+    correct_pass = bcrypt.checkpw(password, user.password.encode())
 
-    if not correctPass:
+    if not correct_pass:
         return render_template("auth/login.html", form=form, error="Incorrect Password")
 
     login_user(user)

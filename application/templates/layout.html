@@ -47,7 +47,7 @@
         {% if current_user.is_authenticated %}
             <p>
                 Logged in as <b>{{ current_user.name }}</b>
-                {% if current_user.hasRole('moderator') %}
+                {% if current_user.has_role('moderator') %}
                     <a class="btn btn-info" href="{{ url_for('users.users') }}"><i class="fa fa-users"></i>
                         Manage Users</a>
                 {% endif %}

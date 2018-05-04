@@ -34,13 +34,13 @@ class User(db.Model):
     def is_authenticated(self):
         return True
 
-    def hasRole(self, role):
+    def has_role(self, role):
         for r in self.roles:
             if r.name == role:
                 return True
         return False
 
-    def roleNames(self):
+    def role_names(self):
         # Turn user's roles into a list of role names
         return list(map(lambda role: role.name, self.roles))
 

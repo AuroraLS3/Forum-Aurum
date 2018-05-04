@@ -14,17 +14,17 @@ bp = Blueprint('users', __name__, template_folder='templates', url_prefix='/user
 @bp.route("/")
 @login_required(role='moderator')
 def users():
-    users = User.query.all()
-    for user in users:
+    all_users = User.query.all()
+    for user in all_users:
         user.name = user.name
-        if current_user.is_authenticated and current_user.hasRole('admin'):
+        if current_user.is_authenticated and current_user.has_role('admin'):
             print("ROLEFORM_ADMIN")
             user.form = RoleFormAdmin()
         else:
             print("ROLEFORM")
             user.form = RoleForm()
 
-    return render_template("users/list.html", users=users)
+    return render_template("users/list.html", users=all_users)
 
 
 @bp.route("/<user_name>/", methods=["POST"])
@@ -33,17 +33,17 @@ def edit(user_name):
     form = RoleFormAdmin(request.form)
     user = User.query.filter_by(name=user_name).first()
 
-    isAdmin = current_user.hasRole('admin')
+    is_admin = current_user.has_role('admin')
 
     # Turn list of role names given in form into Role database objects
-    newRoles = list(map(lambda role: Role.query.filter_by(id=role.id).first(), form.roles.data))
+    new_roles = list(map(lambda role: Role.query.filter_by(id=role.id).first(), form.roles.data))
 
-    if (Role.query.filter_by(name='admin') in newRoles or Role.query.filter_by(
-            name='moderator') in newRoles) and not isAdmin:
+    if (Role.query.filter_by(name='admin') in new_roles or Role.query.filter_by(
+            name='moderator') in new_roles) and not is_admin:
         return render_template("users/list.html", users=User.query.all(),
                                error="You can't modify admin or moderator users if you are not an admin!")
 
-    user.roles = newRoles
+    user.roles = new_roles
     db.session().commit()
     return redirect(url_for("users.users"))
 
