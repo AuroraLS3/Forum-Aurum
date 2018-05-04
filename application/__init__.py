@@ -11,8 +11,8 @@ from flask_misaka import Misaka
 from application.utils.CustomMisakaRenderer import CustomMisakaRenderer
 
 app = Flask(__name__)
-Bootstrap(app)
-Misaka(app, renderer=CustomMisakaRenderer())
+Bootstrap(app)  # Add Bootstrap support
+Misaka(app, renderer=CustomMisakaRenderer())  # Add Markdown support
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -34,10 +34,11 @@ def login_required(role="anyone"):
                 return login_manager.unauthorized()
 
             try:
+                # g.required_role is set in a url preprocessor so that different areas can have different view group
                 if g.required_role is not None:
                     req_role = g.required_role
             except AttributeError:
-                None
+                None  # No-op
 
             unauthorized = False
 
@@ -51,9 +52,9 @@ def login_required(role="anyone"):
         return decorated_view
     return wrapper
 
-
 from application.views import forum, users, auth, areas, topics
 
+# Adds views to app via blueprints
 app.register_blueprint(auth.bp)
 app.register_blueprint(forum.bp)
 app.register_blueprint(users.bp)
@@ -82,6 +83,7 @@ app.config["SECRET_KEY"] = urandom(32)
 
 db.create_all()
 
+# Check if roles have been created and create if necessary
 if not Role.query.filter_by(name='anyone').first():
     db.session.add(Role('anyone'))
     db.session.add(Role('guest'))

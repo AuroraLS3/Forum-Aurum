@@ -41,6 +41,7 @@ class User(db.Model):
         return False
 
     def roleNames(self):
+        # Turn user's roles into a list of role names
         return list(map(lambda role: role.name, self.roles))
 
     @staticmethod

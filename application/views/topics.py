@@ -12,7 +12,7 @@ bp = Blueprint('topic', __name__, template_folder='templates', url_prefix='/foru
 
 
 @bp.url_value_preprocessor
-def pull_lang_code(endpoint, values):
+def fetch_area_and_topic(endpoint, values):
     g.area = Area.query.filter_by(name=values.pop('area_name')).first()
     if not g.area:
         return

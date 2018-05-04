@@ -35,7 +35,9 @@ def edit(user_name):
 
     isAdmin = current_user.hasRole('admin')
 
+    # Turn list of role names given in form into Role database objects
     newRoles = list(map(lambda role: Role.query.filter_by(id=role.id).first(), form.roles.data))
+
     if (Role.query.filter_by(name='admin') in newRoles or Role.query.filter_by(
             name='moderator') in newRoles) and not isAdmin:
         return render_template("users/list.html", users=User.query.all(),
@@ -52,6 +54,7 @@ def delete(user_name):
     user = User.query.filter_by(name=user_name).first()
     user_id = user.id
 
+    # Check if 'admin' is in list of role names the user we are deleting has
     if 'admin' in list(map(lambda role: role.name, user.roles)):
         return render_template("users/list.html", users=User.query.all(),
                                error="Admin accounts can not be removed!")
@@ -59,6 +62,7 @@ def delete(user_name):
     user.roles = [Role.query.filter_by(name='guest').first()]
     db.session().commit()
 
+    # Delete content created by user
     Message.query.filter_by(account_id=user_id).delete()
     Topic.query.filter_by(account_id=user_id).delete()
     User.query.filter_by(name=user_name).delete()
