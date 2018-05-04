@@ -61,12 +61,18 @@ def delete(user_name):
         return redirect(url_for("users.users",
                                 error="Admin accounts can not be removed!"))
 
+    # Reset roles of user to guest in case same name re-registers
     user.roles = [Role.query.filter_by(name='guest').first()]
     db.session().commit()
 
-    # Delete content created by user
+    # Delete messages created by user
     Message.query.filter_by(account_id=user_id).delete()
+    # Delete Messages in topics created by user
+    for topic in Topic.query.filter_by(account_id=user_id).all():
+        Message.query.filter_by(topic_id=topic.id).delete()
+    # Delete topics created by user
     Topic.query.filter_by(account_id=user_id).delete()
+    # Delete user
     User.query.filter_by(name=user_name).delete()
 
     db.session().commit()

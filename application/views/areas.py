@@ -63,6 +63,9 @@ def create_topic():
 
     message = form.message.data
 
+    # Remove possible ghost messages because SQLAlchemy reuses ids
+    Message.query.filter_by(topic_id=new_topic.id).delete()
+
     new_msg = Message(message, new_topic.id)
     new_msg.account_id = current_user.id
 
