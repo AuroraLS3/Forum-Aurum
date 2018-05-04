@@ -15,7 +15,7 @@ bp = Blueprint('area', __name__, template_folder='templates', url_prefix='/forum
 def fetch_area(endpoint, values):
     g.area = Area.query.filter_by(name=values.pop('area_name')).first()
     if not g.area:
-        return redirect(url_for("forum.forum_main"))
+        return
     g.required_role = g.area.required_role.name
     g.breadcrumbs = [
         Crumb('Home', url_for('forum.forum_main')),
