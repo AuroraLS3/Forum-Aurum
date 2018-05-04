@@ -53,7 +53,8 @@ def delete(user_name):
     user_id = user.id
 
     if 'admin' in list(map(lambda role: role.name, user.roles)):
-        return redirect(url_for("users.users"))
+        return render_template("users/list.html", users=User.query.all(),
+                               error="Admin accounts can not be removed!")
 
     user.roles = [Role.query.filter_by(name='guest').first()]
     db.session().commit()
