@@ -4,7 +4,7 @@ from wtforms import PasswordField, StringField, validators
 
 class LoginForm(FlaskForm):
     name = StringField("Username", [validators.InputRequired(), validators.Length(max=100)])
-    password = PasswordField("Password", [validators.InputRequired(), validators.Length(min=6)])
+    password = PasswordField("Password", [validators.InputRequired(), validators.Length(min=6, max=130)])
 
     class Meta:
         csrf = False
