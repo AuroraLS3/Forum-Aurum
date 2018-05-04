@@ -18,7 +18,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 if os.environ.get("HEROKU"):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-    app.config["SQLALCHEMY_ECHO"] = True
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///forum.db"
     app.config["SQLALCHEMY_ECHO"] = True
