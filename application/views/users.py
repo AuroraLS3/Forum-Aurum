@@ -17,7 +17,6 @@ def users():
     users = User.query.all()
     for user in users:
         user.name = user.name
-        user.password = user.password.decode()
         if current_user.is_authenticated and current_user.hasRole('admin'):
             print("ROLEFORM_ADMIN")
             user.form = RoleFormAdmin()
