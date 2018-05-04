@@ -37,4 +37,13 @@
         </div>
     </div>
 
+    {% if g.area.description %}
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h6>{{ g.area.name }}</h6>
+                <p>{{ g.area.description }}</p>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
