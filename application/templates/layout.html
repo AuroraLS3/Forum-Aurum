@@ -40,19 +40,21 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand clickable" onclick=
-                    "location.href = '{{ url_for('forum.forum_main') }}'
-                            ">Forum Aurum</a>
+            <a class="navbar-brand clickable" onclick="location.href = '{{ url_for('forum.forum_main') }}'">
+	            Forum Aurum
+            </a>
         </div>
         {% if current_user.is_authenticated %}
             <p>
                 Logged in as <b>{{ current_user.name }}</b>
                 {% if current_user.has_role('moderator') %}
-                    <a class="btn btn-info" href="{{ url_for('users.users') }}"><i class="fa fa-users"></i>
-                        Manage Users</a>
+                    <a class="btn btn-info" href="{{ url_for('users.users') }}">
+	                    <i class="fa fa-users"></i> Manage Users
+                    </a>
                 {% endif %}
-                <a class="btn btn-info" href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out-alt"></i>
-                    Logout</a>
+                <a class="btn btn-info" href="{{ url_for('auth.logout') }}">
+	                <i class="fa fa-sign-out-alt"></i> Logout
+                </a>
             </p>
         {% else %}
             <div>
@@ -69,8 +71,9 @@
             <ol class="breadcrumb">
                 {% for crumb in g.breadcrumbs %}
                     {% if crumb.url %}
-                        <li class="breadcrumb-item" aria-current="page"><a
-                                href="{{ crumb.url }}">{{ crumb.name }}</a></li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a href="{{ crumb.url }}">{{ crumb.name }}</a>
+                        </li>
                     {% else %}
                         <li class="breadcrumb-item active" aria-current="page">{{ crumb.name }}</li>
                     {% endif %}
@@ -84,7 +87,8 @@
 </main>
 
 <footer class="container">
-    <p class="float-right">Powered by <a target="_blank" href="https://github.com/Rsl1122/Forum-Aurum">Forum Aurum</a>
+    <p class="float-right">
+        Powered by <a target="_blank" href="https://github.com/Rsl1122/Forum-Aurum">Forum Aurum</a>
     </p>
 </footer>
 

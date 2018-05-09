@@ -10,15 +10,16 @@
         <ul class="list-group">
             {% if g.topic.messages %}
                 {% for message in g.topic.messages %}
-                    <div class="list-group-item">
+                    <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-2">
                                 <p>{{ message.created }}</p>
                                 <h5>{{ message.account.name }}</h5>
                             </div>
                             <div class="col-md-9">
-                                <section
-                                        style="padding: 0;">{{ message.content|markdown(no_html=True, autolink=True) }}</section>
+                                <section style="padding: 0;">
+                                    {{ message.content|markdown(no_html=True, autolink=True) }}
+                                </section>
                             </div>
 
                             <div class="col-md-1">
@@ -37,7 +38,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </li>
                 {% endfor %}
             {% else %}
                 <li class="list-group-item"><p><i class="fa fa-comment-alt"></i> No messages here, begin a discussion!
